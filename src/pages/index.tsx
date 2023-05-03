@@ -5,6 +5,7 @@ const Home = () => {
     <div className={styles.container}>
       <main className={styles.main}>
         <h1 className={styles.title}>
+          <div className={styles.icon} />
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
 

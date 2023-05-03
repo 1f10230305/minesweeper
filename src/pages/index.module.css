@@ -8,6 +8,12 @@
   padding: 0 0.5rem;
 }
 
+.icon {
+  height: 30px;
+  width: 30px;
+  background: url('~/assets/images/icons.png');
+}
+
 .main {
   display: flex;
   flex: 1;
