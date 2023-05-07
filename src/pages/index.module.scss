@@ -35,6 +35,10 @@
     right-color: #fff;
     bottom-color: #fff;
   }
+
+  &:active .stone:not(:has(> .icon)):hover {
+    border: 0;
+  }
 }
 
 .cell {
@@ -51,6 +55,7 @@
   position: absolute;
   inset: 0;
   z-index: 2;
+  user-select: none;
   border: solid 4px {
     top-color: #fff;
     left-color: #fff;
@@ -67,9 +72,10 @@
   position: absolute;
   inset: 0;
   z-index: 1;
+  user-select: none;
 }
 
-.top {
+.header {
   display: flex;
   align-items: center;
   justify-content: space-between;
