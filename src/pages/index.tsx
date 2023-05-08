@@ -1,5 +1,5 @@
 import type { MouseEvent } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 
 const Home = () => {
@@ -17,6 +17,10 @@ const Home = () => {
 
   const [userInputs, setUserInputs] = useState<(0 | 1 | 2 | 3)[][]>(zeroArray);
   const [bombMap, setBombMap] = useState<number[][]>(zeroArray);
+  const [time, setTime] = useState({
+    startTime: 0,
+    currentTime: 0,
+  });
 
   const board: number[][] = [
     [-1, -1, -1, -1, -1, -1, -1, -1, -1],
@@ -41,7 +45,7 @@ const Home = () => {
     [-1, 1],
   ];
 
-  let gameState: 0 | 1 | 2 = 0;
+  let gameState: 0 | 1 | 2 | 3 = 0;
 
   const isFirst: boolean = userInputs.every((row) => row.every((cell) => cell !== 1));
 
@@ -83,7 +87,7 @@ const Home = () => {
   };
 
   const burstBomb = (x: number, y: number) => {
-    gameState = 2;
+    gameState = 3;
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
         if (bombMap[i][j] && userInputs[y][x] < 2) {
@@ -117,11 +121,45 @@ const Home = () => {
   const resetGame = () => {
     setUserInputs(zeroArray);
     setBombMap(zeroArray);
+    setTime({
+      startTime: 0,
+      currentTime: 0,
+    });
+    gameState = 0;
   };
 
-  const clearGame = () => {};
+  const finishGame = () => {
+    let stoneCount = 0;
+    for (let x = 0; x < 9; x++) {
+      for (let y = 0; y < 9; y++) {
+        if (board[y][x] === -1 || board[y][x] === 9 || board[y][x] === 10) stoneCount++;
+      }
+    }
+    if (stoneCount === 10) {
+      gameState = 2;
+      for (let x = 0; x < 9; x++) {
+        for (let y = 0; y < 9; y++) {
+          if (bombMap[y][x] === 1) board[y][x] = 10;
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (gameState === 1) {
+        setTime({
+          ...time,
+          currentTime: Date.now(),
+        });
+        console.log(time);
+      }
+    }, 1000);
+    return () => clearInterval(timer);
+  });
 
   const setBoard = () => {
+    if (!isFirst) gameState = 1;
     for (let x = 0; x < 9; x++) {
       for (let y = 0; y < 9; y++) {
         switch (userInputs[y][x]) {
@@ -136,19 +174,27 @@ const Home = () => {
         }
       }
     }
+    finishGame();
   };
   setBoard();
 
   const clickLeft = (x: number, y: number, event: MouseEvent<HTMLDivElement>) => {
-    if (event.button === 0 && !gameState) {
-      if (isFirst) setBomb(x, y);
+    if (event.button === 0 && gameState <= 1) {
+      if (isFirst) {
+        gameState = 1;
+        setBomb(x, y);
+        setTime({
+          startTime: Date.now(),
+          currentTime: Date.now(),
+        });
+        console.log(gameState);
+      }
       if (board[y][x] === -1) {
         const newUserInputs: (0 | 1 | 2 | 3)[][] = JSON.parse(JSON.stringify(userInputs));
         newUserInputs[y][x] = 1;
         setUserInputs(newUserInputs);
       } else if (board[y][x] > 0 && board[y][x] < 9) {
         clickNumber(x, y);
-        console.log('1');
       }
     }
   };
@@ -177,13 +223,28 @@ const Home = () => {
     <div className={styles.container}>
       <div className={styles.minesweeper}>
         <div className={styles.header}>
-          <div />
+          <div className={styles.counter}>
+            {Math.floor((time.currentTime - time.startTime) / 1000)}
+          </div>
           <button
             className={styles['reset-button']}
             onClick={resetGame}
-            style={{ backgroundPosition: `${(gameState + 11) * -100}%` }}
+            style={{ backgroundPosition: !gameState ? '-1100%' : `${(gameState + 10) * -100}%` }}
           />
-          <div />
+          <div className={styles.counter}>
+            <div className={styles.num}>
+              <div className={styles['num-top']} />
+              <div className={styles['num-bottom']} />
+            </div>
+            <div className={styles.num}>
+              <div className={styles['num-top']} />
+              <div className={styles['num-bottom']} />
+            </div>
+            <div className={styles.num}>
+              <div className={styles['num-top']} />
+              <div className={styles['num-bottom']} />
+            </div>
+          </div>
         </div>
         <div className={styles.board}>
           {board.map((row, y) =>
