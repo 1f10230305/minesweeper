@@ -36,8 +36,10 @@
     bottom-color: #fff;
   }
 
-  &:active .stone:not(:has(> .icon)):hover {
-    border: 0;
+  &:active {
+    .stone:not(:has(> .icon)):hover {
+      border: 0;
+    }
   }
 }
 
@@ -69,6 +71,7 @@
   height: 100%;
   background-image: url('~/assets/images/icons.png');
   background-size: 1400%;
+  background-repeat: repeat-x;
   position: absolute;
   inset: 0;
   z-index: 1;
@@ -159,5 +162,192 @@
     right-color: #e00;
     left-color: #f33;
     bottom-color: #c00;
+  }
+}
+
+.num-1 {
+  > .num-top,
+  > .num-bottom {
+    border: {
+      top-color: #0000;
+      left-color: #0000;
+      bottom-color: #0000;
+    }
+  }
+}
+
+.num-2 {
+  > .num-top {
+    border-left-color: #0000;
+  }
+  > .num-bottom {
+    border-right-color: #0000;
+  }
+}
+
+.num-3 {
+  > .num-top,
+  > .num-bottom {
+    border-left-color: #0000;
+  }
+}
+
+.num-4 {
+  > .num-top {
+    border-top-color: #0000;
+  }
+  > .num-bottom {
+    border: {
+      left-color: #0000;
+      bottom-color: #0000;
+    }
+  }
+}
+
+.num-5 {
+  > .num-top {
+    border-right-color: #0000;
+  }
+  > .num-bottom {
+    border-left-color: #0000;
+  }
+}
+
+.num-6 > .num-top {
+  border-right-color: #0000;
+}
+
+.num-7 {
+  > .num-top {
+    border-bottom-color: #0000;
+  }
+  > .num-bottom {
+    border: {
+      top-color: #0000;
+      left-color: #0000;
+      bottom-color: #0000;
+    }
+  }
+}
+
+.num-9 > .num-bottom {
+  border-left-color: #0000;
+}
+
+.num-0 {
+  > .num-top {
+    border-bottom-color: #0000;
+  }
+  > .num-bottom {
+    border-top-color: #0000;
+  }
+}
+
+.num-minus {
+  > .num-top,
+  > .num-bottom {
+    border: {
+      right-color: #0000;
+      left-color: #0000;
+    }
+  }
+  > .num-top {
+    border-top-color: #0000;
+  }
+  > .num-bottom {
+    border-bottom-color: #0000;
+  }
+}
+
+@for $i from 0 through 81 {
+  $list: -10, -9, -8, -1, 1, 8, 9, 10;
+  @if $i == 1 {
+    @each $n in $list {
+      @if $n > 0 and $n != 8 {
+        .board:has(.cell:nth-child(1):not(.has-bomb) > .icon:hover):active
+          > .cell:nth-child(#{1 + $n})
+          > .stone:not(:has(> .icon)) {
+          border: 0;
+        }
+      }
+    }
+  } @else if $i <= 8 {
+    @each $n in $list {
+      @if $n >= -1 {
+        .board:has(.cell:nth-child(#{$i}):not(.has-bomb) > .icon:hover):active
+          > .cell:nth-child(#{$i + $n})
+          > .stone:not(:has(> .icon)) {
+          border: 0;
+        }
+      }
+    }
+  } @else if $i == 9 {
+    @each $n in $list {
+      @if $n >= -1 and $n != 1 and $n != 10 {
+        .board:has(.cell:nth-child(9):not(.has-bomb) > .icon:hover):active
+          > .cell:nth-child(#{9 + $n})
+          > .stone:not(:has(> .icon)) {
+          border: 0;
+        }
+      }
+    }
+  } @else if $i == 81 {
+    @each $n in $list {
+      @if $n > 0 and $n != 8 {
+        .board:has(.cell:nth-child(#{$i}) > .icon:hover):active
+          > .cell:nth-child(#{81 - $n})
+          > .stone:not(:has(> .icon)) {
+          border: 0;
+        }
+      }
+    }
+  } @else if $i > 73 {
+    @each $n in $list {
+      @if $n <= 1 {
+        .board:has(.cell:nth-child(#{$i}):not(.has-bomb) > .icon:hover):active
+          > .cell:nth-child(#{$i + $n})
+          > .stone:not(:has(> .icon)) {
+          border: 0;
+        }
+      }
+    }
+  } @else if $i == 73 {
+    @each $n in $list {
+      @if $n <= 1 and $n != -1 and $n != -10 {
+        .board:has(.cell:nth-child(#{$i}):not(.has-bomb) > .icon:hover):active
+          > .cell:nth-child(#{$i + $n})
+          > .stone:not(:has(> .icon)) {
+          border: 0;
+        }
+      }
+    }
+  } @else if $i % 9 == 1 {
+    @each $n in $list {
+      @if $n != -10 and $n != -1 and $n != 8 {
+        .board:has(.cell:nth-child(#{$i}):not(.has-bomb) > .icon:hover):active
+          > .cell:nth-child(#{$i + $n})
+          > .stone:not(:has(> .icon)) {
+          border: 0;
+        }
+      }
+    }
+  } @else if $i % 9 == 0 {
+    @each $n in $list {
+      @if $n != 10 and $n != 1 and $n != -8 {
+        .board:has(.cell:nth-child(#{$i}):not(.has-bomb) > .icon:hover):active
+          > .cell:nth-child(#{$i + $n})
+          > .stone:not(:has(> .icon)) {
+          border: 0;
+        }
+      }
+    }
+  } @else {
+    @each $n in $list {
+      .board:has(.cell:nth-child(#{$i}):not(.has-bomb) > .icon:hover):active
+        > .cell:nth-child(#{$i + $n})
+        > .stone:not(:has(> .icon)) {
+        border: 0;
+      }
+    }
   }
 }
