@@ -16,12 +16,12 @@
     "typecheck": "npm run hcm && tsc --noEmit"
   },
   "dependencies": {
-    "@biomejs/biome": "^1.7.2",
     "next": "14.2.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.7.3",
     "@types/node": "^20.11.30",
     "@types/react": "^18.2.67",
     "happy-css-modules": "^2.1.2",
