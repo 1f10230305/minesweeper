@@ -35,5 +35,13 @@
     "stylelint-config-standard": "^36.0.0",
     "stylelint-prettier": "^5.0.0",
     "typescript": "^5.1.6"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "npm run lint:js -- --apply"
+    ],
+    "*.css": [
+      "npm run lint:style -- --fix"
+    ]
   }
 }
