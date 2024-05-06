@@ -9,10 +9,9 @@
     "hcm": "hcm 'src/**/*.module.css'",
     "build": "next build",
     "lint": "run-p lint:js lint:prettier lint:style",
-    "lint:js": "",
-    "lint:prettier": "",
+    "lint:js": "biome check ./src/",
     "lint:style": "stylelint \"src/**/*.css\" --ignore-path .gitignore",
-    "lint:fix": "npm run lint:js && npm run lint:style -- --fix",
+    "lint:fix": "npm run lint:js -- --apply && npm run lint:style -- --fix",
     "start": "next start",
     "typecheck": "npm run hcm && tsc --noEmit"
   },
