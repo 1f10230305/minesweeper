@@ -1,5 +1,7 @@
 .board {
   display: grid;
   grid-template: repeat(9, 1fr) / repeat(9, 1fr);
-  border: solid 1px #000;
+  border-color: var(--minesweeper-border-color-2);
+  border-style: solid;
+  border-width: 1svmin;
 }

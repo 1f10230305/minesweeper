@@ -1,0 +1,11 @@
+:root {
+  --minesweeper-base-bg: #c6c6c6;
+  --minesweeper-shadow-dark: #868686;
+  --minesweeper-shadow-light: #fff;
+  --minesweeper-border-color-1: var(--minesweeper-shadow-light)
+    var(--minesweeper-shadow-dark) var(--minesweeper-shadow-dark)
+    var(--minesweeper-shadow-light);
+  --minesweeper-border-color-2: var(--minesweeper-shadow-dark)
+    var(--minesweeper-shadow-light) var(--minesweeper-shadow-light)
+    var(--minesweeper-shadow-dark);
+}

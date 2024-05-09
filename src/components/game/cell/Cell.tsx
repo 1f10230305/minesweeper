@@ -18,6 +18,6 @@ export const Cell: FC<CellProps> = ({ cell, position, handleClick }) => (
     onKeyDown={() => handleClick.left(position)}
     className={styles.cell}
   >
-    {/* {cell} */}
+    <div className={styles.stone} />
   </div>
 )
