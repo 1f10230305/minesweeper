@@ -1,0 +1,7 @@
+.game {
+  display: grid;
+  grid-template: 12svmin 64svmin / 64svmin;
+  gap: 4svmin;
+  padding: 4svmin;
+  border: solid 1px #000;
+}

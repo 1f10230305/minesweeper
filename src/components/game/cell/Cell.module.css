@@ -1,0 +1,7 @@
+.cell {
+  display: grid;
+  place-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+  border: solid 1px #000;
+}
